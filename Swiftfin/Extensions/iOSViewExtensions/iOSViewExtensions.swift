@@ -9,8 +9,9 @@
 import SwiftUI
 
 extension View {
-    func navBarOffset(_ scrollViewOffset: Binding<CGFloat>, start: CGFloat, end: CGFloat) -> some View {
-        self.modifier(NavBarOffsetModifier(scrollViewOffset: scrollViewOffset, start: start, end: end))
+    func navBarOffset(backgroundColor: Color? = nil,_ scrollViewOffset: Binding<CGFloat>, start: CGFloat, end: CGFloat) -> some View {
+        self.modifier(NavBarOffsetModifier(backgroundColor: backgroundColor, scrollViewOffset: scrollViewOffset, start: start, end: end))
+    
     }
 
     func navBarDrawer<Drawer: View>(@ViewBuilder _ drawer: @escaping () -> Drawer) -> some View {

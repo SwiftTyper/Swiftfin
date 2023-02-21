@@ -26,7 +26,7 @@ final class MediaViewModel: ViewModel {
             .appending(libraries)
     }
 
-    private static let supportedCollectionTypes: [String] = ["boxsets", "folders", "movies", "tvshows", "unknown"]
+    private static let supportedCollectionTypes: [String] = ["boxsets", "folders", "movies", "tvshows", "unknown", "music"]
 
     override init() {
         super.init()
@@ -58,7 +58,7 @@ final class MediaViewModel: ViewModel {
             limit: 3,
             recursive: true,
             parentId: id,
-            includeItemTypes: [.movie, .series],
+            includeItemTypes: [.movie, .series, .musicAlbum, .musicVideo],
             filters: filters,
             sortBy: ["Random"]
         )

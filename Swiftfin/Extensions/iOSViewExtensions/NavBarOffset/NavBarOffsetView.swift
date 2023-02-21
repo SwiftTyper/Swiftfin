@@ -12,12 +12,13 @@ struct NavBarOffsetView<Content: View>: UIViewControllerRepresentable {
 
     @Binding
     private var scrollViewOffset: CGFloat
-
+    private var backgroundColor: UIColor?
     private let start: CGFloat
     private let end: CGFloat
     private let content: () -> Content
 
-    init(scrollViewOffset: Binding<CGFloat>, start: CGFloat, end: CGFloat, @ViewBuilder content: @escaping () -> Content) {
+    init(backgroundColor: Color?, scrollViewOffset: Binding<CGFloat>, start: CGFloat, end: CGFloat, @ViewBuilder content: @escaping () -> Content) {
+        self.backgroundColor = backgroundColor == nil ? nil : UIColor(backgroundColor!)
         self._scrollViewOffset = scrollViewOffset
         self.start = start
         self.end = end
@@ -32,7 +33,9 @@ struct NavBarOffsetView<Content: View>: UIViewControllerRepresentable {
     }
 
     func makeUIViewController(context: Context) -> UINavBarOffsetHostingController<Content> {
-        UINavBarOffsetHostingController(rootView: content())
+        let nav = UINavBarOffsetHostingController(rootView: content())
+        nav.backgroundColor = backgroundColor
+        return nav
     }
 
     func updateUIViewController(_ uiViewController: UINavBarOffsetHostingController<Content>, context: Context) {
@@ -43,21 +46,31 @@ struct NavBarOffsetView<Content: View>: UIViewControllerRepresentable {
 class UINavBarOffsetHostingController<Content: View>: UIHostingController<Content> {
 
     private var lastScrollViewOffset: CGFloat = 0
-
+    var backgroundColor: UIColor?
+    
     private lazy var navBarBlurView: UIVisualEffectView = {
+        
+        if let backgroundColor = backgroundColor {
+            let colorView = UIVisualEffectView(effect: .none)
+            colorView.translatesAutoresizingMaskIntoConstraints = false
+            return colorView
+        }
         let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial))
         blurView.translatesAutoresizingMaskIntoConstraints = false
         return blurView
+        
     }()
 
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         view.backgroundColor = nil
 
         view.addSubview(navBarBlurView)
         navBarBlurView.alpha = 0
-
+        navBarBlurView.backgroundColor = backgroundColor
         NSLayoutConstraint.activate([
             navBarBlurView.topAnchor.constraint(equalTo: view.topAnchor),
             navBarBlurView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

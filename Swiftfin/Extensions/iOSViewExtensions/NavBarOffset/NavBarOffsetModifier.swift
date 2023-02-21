@@ -9,15 +9,22 @@
 import SwiftUI
 
 struct NavBarOffsetModifier: ViewModifier {
-
+    
     @Binding
     var scrollViewOffset: CGFloat
-
+    var backgroundColor: Color?
     let start: CGFloat
     let end: CGFloat
+    
+    init(backgroundColor: Color?, scrollViewOffset: Binding<CGFloat>, start: CGFloat, end: CGFloat){
+        self.backgroundColor = backgroundColor
+        self._scrollViewOffset = scrollViewOffset
+        self.start = start
+        self.end = end
+    }
 
     func body(content: Content) -> some View {
-        NavBarOffsetView(scrollViewOffset: $scrollViewOffset, start: start, end: end) {
+        NavBarOffsetView(backgroundColor: backgroundColor, scrollViewOffset: $scrollViewOffset, start: start, end: end) {
             content
         }
         .ignoresSafeArea()

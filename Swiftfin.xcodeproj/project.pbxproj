@@ -171,6 +171,14 @@
 		62ECA01826FA685A00E8EBB7 /* DeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62ECA01726FA685A00E8EBB7 /* DeepLink.swift */; };
 		6334175B287DDFB9000603CE /* QuickConnectSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6334175A287DDFB9000603CE /* QuickConnectSettingsView.swift */; };
 		6334175D287DE0D0000603CE /* QuickConnectSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6334175C287DE0D0000603CE /* QuickConnectSettingsViewModel.swift */; };
+		672F41FA299C594900FD1CC7 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672F41F9299C594900FD1CC7 /* View.swift */; };
+		679282DB299D4088003A862A /* AlbumScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 679282DA299D4088003A862A /* AlbumScrollView.swift */; };
+		67B4720029996210002F8806 /* AlbumItemContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B471FF29996210002F8806 /* AlbumItemContentView.swift */; };
+		67B4720229996336002F8806 /* AlbumItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B4720129996336002F8806 /* AlbumItemViewModel.swift */; };
+		67B47204299A744D002F8806 /* SongItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B47203299A744D002F8806 /* SongItemViewModel.swift */; };
+		67B47206299A7AFA002F8806 /* AlbumItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B47205299A7AFA002F8806 /* AlbumItemView.swift */; };
+		67B4720A299B18BA002F8806 /* SongItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B47209299B18BA002F8806 /* SongItemView.swift */; };
+		67B4720C299BC8F7002F8806 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B4720B299BC8F7002F8806 /* UIImage.swift */; };
 		AE8C3159265D6F90008AA076 /* bitrates.json in Resources */ = {isa = PBXBuildFile; fileRef = AE8C3158265D6F90008AA076 /* bitrates.json */; };
 		C400DB6A27FE894F007B65FE /* LiveTVChannelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C400DB6927FE894F007B65FE /* LiveTVChannelsView.swift */; };
 		C400DB6B27FE8C97007B65FE /* LiveTVChannelItemElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E52304272CE68800654268 /* LiveTVChannelItemElement.swift */; };
@@ -734,6 +742,14 @@
 		6334175A287DDFB9000603CE /* QuickConnectSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickConnectSettingsView.swift; sourceTree = "<group>"; };
 		6334175C287DE0D0000603CE /* QuickConnectSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickConnectSettingsViewModel.swift; sourceTree = "<group>"; };
 		637FCAF3287B5B2600C0A353 /* UDPBroadcast.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = UDPBroadcast.xcframework; path = Carthage/Build/UDPBroadcast.xcframework; sourceTree = "<group>"; };
+		672F41F9299C594900FD1CC7 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		679282DA299D4088003A862A /* AlbumScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumScrollView.swift; sourceTree = "<group>"; };
+		67B471FF29996210002F8806 /* AlbumItemContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumItemContentView.swift; sourceTree = "<group>"; };
+		67B4720129996336002F8806 /* AlbumItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumItemViewModel.swift; sourceTree = "<group>"; };
+		67B47203299A744D002F8806 /* SongItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongItemViewModel.swift; sourceTree = "<group>"; };
+		67B47205299A7AFA002F8806 /* AlbumItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumItemView.swift; sourceTree = "<group>"; };
+		67B47209299B18BA002F8806 /* SongItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongItemView.swift; sourceTree = "<group>"; };
+		67B4720B299BC8F7002F8806 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		AE8C3158265D6F90008AA076 /* bitrates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = bitrates.json; sourceTree = "<group>"; };
 		C400DB6927FE894F007B65FE /* LiveTVChannelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTVChannelsView.swift; sourceTree = "<group>"; };
 		C400DB6C27FE8E65007B65FE /* LiveTVChannelItemWideElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTVChannelItemWideElement.swift; sourceTree = "<group>"; };
@@ -1541,6 +1557,7 @@
 				62E1DCC2273CE19800C9AE76 /* URLExtensions.swift */,
 				E11895A22893409D0042947B /* ViewExtensions */,
 				5D160402278A41FD00D22B99 /* VLCPlayer+subtitles.swift */,
+				67B4720B299BC8F7002F8806 /* UIImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1602,6 +1619,18 @@
 			path = AppURLHandler;
 			sourceTree = "<group>";
 		};
+		67B471FE29995D55002F8806 /* MusicAlbumItemView */ = {
+			isa = PBXGroup;
+			children = (
+				67B471FF29996210002F8806 /* AlbumItemContentView.swift */,
+				67B47205299A7AFA002F8806 /* AlbumItemView.swift */,
+				67B47209299B18BA002F8806 /* SongItemView.swift */,
+				679282DA299D4088003A862A /* AlbumScrollView.swift */,
+				672F41F9299C594900FD1CC7 /* View.swift */,
+			);
+			path = MusicAlbumItemView;
+			sourceTree = "<group>";
+		};
 		AE8C3157265D6F5E008AA076 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1628,6 +1657,8 @@
 				62E632E2267D3BA60063E547 /* MovieItemViewModel.swift */,
 				62E632E8267D3FF50063E547 /* SeasonItemViewModel.swift */,
 				62E632EB267D410B0063E547 /* SeriesItemViewModel.swift */,
+				67B4720129996336002F8806 /* AlbumItemViewModel.swift */,
+				67B47203299A744D002F8806 /* SongItemViewModel.swift */,
 			);
 			path = ItemViewModel;
 			sourceTree = "<group>";
@@ -1941,6 +1972,7 @@
 		E18E01C0288747230022598C /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				67B471FE29995D55002F8806 /* MusicAlbumItemView */,
 				E18E01C8288747230022598C /* CollectionItemView */,
 				E18E01C1288747230022598C /* EpisodeItemView */,
 				E18E01CE288747230022598C /* MovieItemView */,
@@ -2735,12 +2767,14 @@
 				62C29EA126D102A500C1D2E7 /* iOSMainTabCoordinator.swift in Sources */,
 				E18E01E8288747230022598C /* SeriesItemContentView.swift in Sources */,
 				E16AA60828A364A6009A983C /* PosterButton.swift in Sources */,
+				672F41FA299C594900FD1CC7 /* View.swift in Sources */,
 				E1E1644128BB301900323B0A /* ArrayExtensions.swift in Sources */,
 				E18CE0AF28A222240092E7F1 /* PublicUserSignInView.swift in Sources */,
 				E18E01E5288747230022598C /* CinematicScrollView.swift in Sources */,
 				E1C812C0277A8E5D00918266 /* VLCPlayerView.swift in Sources */,
 				E176DE6D278E30D2001EFD8D /* EpisodeCard.swift in Sources */,
 				535BAE9F2649E569005FA86D /* ItemView.swift in Sources */,
+				67B47204299A744D002F8806 /* SongItemViewModel.swift in Sources */,
 				E10EAA4F277BBCC4000269ED /* CGSizeExtensions.swift in Sources */,
 				E10D87E227852FD000BD264C /* EpisodesRowManager.swift in Sources */,
 				E18E01EB288747230022598C /* MovieItemContentView.swift in Sources */,
@@ -2760,6 +2794,7 @@
 				536D3D78267BD5C30004248C /* ViewModel.swift in Sources */,
 				E1A2C158279A7D76005EC829 /* BundleExtensions.swift in Sources */,
 				C45942C627F695FB00C54FE7 /* LiveTVProgramsCoordinator.swift in Sources */,
+				67B47206299A7AFA002F8806 /* AlbumItemView.swift in Sources */,
 				E1FCD08826C35A0D007C8DCF /* NetworkError.swift in Sources */,
 				E12CC1BB28D11E1000678D5D /* RecentlyAddedViewModel.swift in Sources */,
 				E17FB55228C119D400311DFE /* Displayable.swift in Sources */,
@@ -2781,6 +2816,7 @@
 				E18E01DA288747230022598C /* iPadOSEpisodeContentView.swift in Sources */,
 				E1047E2327E5880000CB0D4A /* InitialFailureView.swift in Sources */,
 				E1CEFBF527914C7700F60429 /* CustomizeViewsSettings.swift in Sources */,
+				67B4720229996336002F8806 /* AlbumItemViewModel.swift in Sources */,
 				E1C812BC277A8E5D00918266 /* PlaybackSpeed.swift in Sources */,
 				E168BD14289A4162001A6922 /* LatestInLibraryView.swift in Sources */,
 				E1E5D5492783CDD700692DFE /* OverlaySettingsView.swift in Sources */,
@@ -2822,6 +2858,7 @@
 				E168BD15289A4162001A6922 /* HomeErrorView.swift in Sources */,
 				E13DD3F5271793BB009D4DAF /* UserSignInView.swift in Sources */,
 				E1D3044428D1991900587289 /* LibraryViewTypeToggle.swift in Sources */,
+				67B4720C299BC8F7002F8806 /* UIImage.swift in Sources */,
 				E148128B28C15526003B8787 /* SortBy.swift in Sources */,
 				5D1603FC278A3D5800D22B99 /* SubtitleSize.swift in Sources */,
 				E1F0204E26CCCA74001C1C3B /* VideoPlayerJumpLength.swift in Sources */,
@@ -2888,6 +2925,7 @@
 				E1937A3E288F0D3D00CB80AA /* UIScreenExtensions.swift in Sources */,
 				C4BE076F2720FEFF003F4AD1 /* PlainNavigationLinkButton.swift in Sources */,
 				E1EBCB46278BD595009FE6E9 /* ItemOverviewView.swift in Sources */,
+				67B4720029996210002F8806 /* AlbumItemContentView.swift in Sources */,
 				E18CE0B428A22EDA0092E7F1 /* RepeatingTimer.swift in Sources */,
 				091B5A8A2683142E00D78B61 /* ServerDiscovery.swift in Sources */,
 				5D64683D277B1649009E09AE /* PreferenceUIHostingSwizzling.swift in Sources */,
@@ -2897,6 +2935,7 @@
 				C45640D0281A43EF007096DE /* LiveTVNativePlayerViewController.swift in Sources */,
 				E10EAA53277BBD17000269ED /* BaseItemDto+VideoPlayerViewModel.swift in Sources */,
 				E1D3044228D1976600587289 /* CastAndCrewItemRow.swift in Sources */,
+				679282DB299D4088003A862A /* AlbumScrollView.swift in Sources */,
 				E1AD104D26D96CE3003E4A08 /* BaseItemDtoExtensions.swift in Sources */,
 				E13DD3BF27163DD7009D4DAF /* AppDelegate.swift in Sources */,
 				535870AD2669D8DD00D05A09 /* ItemFilters.swift in Sources */,
@@ -2914,6 +2953,7 @@
 				E13DD3F92717E961009D4DAF /* UserListViewModel.swift in Sources */,
 				E126F741278A656C00A522BF /* ServerStreamType.swift in Sources */,
 				E12CC1BF28D1260600678D5D /* ItemTypeLibraryViewModel.swift in Sources */,
+				67B4720A299B18BA002F8806 /* SongItemView.swift in Sources */,
 				539B2DA5263BA5B8007FF1A4 /* SettingsView.swift in Sources */,
 				5338F74E263B61370014BF09 /* ConnectToServerView.swift in Sources */,
 				E18E01EA288747230022598C /* MovieItemView.swift in Sources */,
