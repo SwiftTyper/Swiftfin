@@ -12,12 +12,14 @@ struct NavBarOffsetView<Content: View>: UIViewControllerRepresentable {
 
     @Binding
     private var scrollViewOffset: CGFloat
+    private var textColor: UIColor?
     private var backgroundColor: UIColor?
     private let start: CGFloat
     private let end: CGFloat
     private let content: () -> Content
 
-    init(backgroundColor: Color?, scrollViewOffset: Binding<CGFloat>, start: CGFloat, end: CGFloat, @ViewBuilder content: @escaping () -> Content) {
+    init(textColor: Color?, backgroundColor: Color?, scrollViewOffset: Binding<CGFloat>, start: CGFloat, end: CGFloat, @ViewBuilder content: @escaping () -> Content) {
+        self.textColor = textColor == nil ? nil : UIColor(textColor!)
         self.backgroundColor = backgroundColor == nil ? nil : UIColor(backgroundColor!)
         self._scrollViewOffset = scrollViewOffset
         self.start = start
@@ -33,20 +35,23 @@ struct NavBarOffsetView<Content: View>: UIViewControllerRepresentable {
     }
 
     func makeUIViewController(context: Context) -> UINavBarOffsetHostingController<Content> {
-        let nav = UINavBarOffsetHostingController(rootView: content())
-        nav.backgroundColor = backgroundColor
-        return nav
+        let navbarController = UINavBarOffsetHostingController(rootView: content())
+        navbarController.backgroundColor = backgroundColor
+        navbarController.textColor = textColor
+        return navbarController
     }
 
     func updateUIViewController(_ uiViewController: UINavBarOffsetHostingController<Content>, context: Context) {
         uiViewController.scrollViewDidScroll(scrollViewOffset, start: start, end: end)
     }
+    
 }
 
 class UINavBarOffsetHostingController<Content: View>: UIHostingController<Content> {
 
     private var lastScrollViewOffset: CGFloat = 0
     var backgroundColor: UIColor?
+    var textColor: UIColor?
     
     private lazy var navBarBlurView: UIVisualEffectView = {
         
@@ -65,9 +70,7 @@ class UINavBarOffsetHostingController<Content: View>: UIHostingController<Conten
     override func viewDidLoad() {
         
         super.viewDidLoad()
-
         view.backgroundColor = nil
-
         view.addSubview(navBarBlurView)
         navBarBlurView.alpha = 0
         navBarBlurView.backgroundColor = backgroundColor
@@ -85,7 +88,7 @@ class UINavBarOffsetHostingController<Content: View>: UIHostingController<Conten
         let offset = min(max(currentProgress, 0), 1)
 
         self.navigationController?.navigationBar
-            .titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(offset)]
+            .titleTextAttributes = [NSAttributedString.Key.foregroundColor:(textColor == nil ? UIColor.label : textColor!).withAlphaComponent(offset)]
         navBarBlurView.alpha = offset
         lastScrollViewOffset = offset
     }
@@ -93,7 +96,7 @@ class UINavBarOffsetHostingController<Content: View>: UIHostingController<Conten
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar
-            .titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(lastScrollViewOffset)]
+            .titleTextAttributes = [NSAttributedString.Key.foregroundColor: (textColor == nil ? UIColor.label : textColor!).withAlphaComponent(lastScrollViewOffset)]
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }

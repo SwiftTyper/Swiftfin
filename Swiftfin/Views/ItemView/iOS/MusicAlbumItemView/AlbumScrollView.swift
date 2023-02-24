@@ -17,8 +17,8 @@ extension ItemView {
         private var itemRouter: ItemCoordinator.Router
         @State
         private var scrollViewOffset: CGFloat = 0
-        @State
-        private var blurHashBottomEdgeColor: Color = .secondarySystemFill
+      
+        @Namespace var animation
         @ObservedObject
         var viewModel: AlbumItemViewModel
         
@@ -40,7 +40,7 @@ extension ItemView {
         }
 
         private var headerOverlayOpacity: CGFloat{
-            return scrollViewOffset / headerHeight * 1.5
+            return scrollViewOffset / headerHeight * 2
         }
         
 
@@ -61,10 +61,11 @@ extension ItemView {
             .edgesIgnoringSafeArea(.top)
             .scrollViewOffset($scrollViewOffset)
             .navBarOffset(
-                backgroundColor: viewModel.backgroundColor!,
+                textColor: viewModel.textColor,
+                backgroundColor: viewModel.backgroundColor,
                 $scrollViewOffset,
-                start: UIScreen.main.bounds.height * 0.28,
-                end: UIScreen.main.bounds.height * 0.28 + 50
+                start: UIScreen.main.bounds.height * 0.30,
+                end: UIScreen.main.bounds.height * 0.30 + 50
             )
             .backgroundParallaxHeader(
                 $scrollViewOffset,
@@ -85,18 +86,27 @@ extension ItemView {
                 ImageView(viewModel.item.imageSource(.primary, maxWidth: UIScreen.main.bounds.width))
                     .frame(height: headerHeight)
                     .overlay(
-                        viewModel.backgroundColor!
+                        (viewModel.backgroundColor ?? Color.systemBackground)
                             .opacity(headerOverlayOpacity)
                     )
                 
-                Text(viewModel.item.displayName)
-                    .font(.title)
-                    .fontWeight(.heavy)
-                    .foregroundColor(.primary)
-                    .opacity(headerTextOpacity)
-                    .padding(.leading, 30)
-                    .padding(.bottom, 10)
-                    .lineLimit(1)
+                if scrollViewOffset <= UIScreen.main.bounds.height * 0.30 {
+                
+                    Text(viewModel.item.displayName)
+                        .font(.largeTitle)
+                        .fontWeight(.heavy)
+                        .foregroundColor(viewModel.textColor != nil ? viewModel.textColor : .primary)
+                        .opacity(headerTextOpacity)
+                        .matchedGeometryEffect(id: "Title", in: animation)
+                        .padding(.leading, 30)
+                        .padding(.bottom, 10)
+                        .lineLimit(1)
+                        .onAppear(){
+                            print(UIScreen.main.bounds.height * 0.3)
+                        }
+                    
+                }
+           
             }
         }
         
@@ -104,7 +114,7 @@ extension ItemView {
         func DetailsView() -> some View {
             
             ZStack {
-                LinearGradient(colors: [viewModel.backgroundColor!, .systemBackground], startPoint: .top, endPoint: .bottom)
+                LinearGradient(colors: [viewModel.backgroundColor ?? .systemBackground, .systemBackground], startPoint: .top, endPoint: .bottom)
                 
                 HStack{
                     

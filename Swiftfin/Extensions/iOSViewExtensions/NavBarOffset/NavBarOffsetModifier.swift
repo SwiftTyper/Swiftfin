@@ -12,11 +12,13 @@ struct NavBarOffsetModifier: ViewModifier {
     
     @Binding
     var scrollViewOffset: CGFloat
+    var textColor: Color?
     var backgroundColor: Color?
     let start: CGFloat
     let end: CGFloat
     
-    init(backgroundColor: Color?, scrollViewOffset: Binding<CGFloat>, start: CGFloat, end: CGFloat){
+    init(textColor: Color?, backgroundColor: Color?, scrollViewOffset: Binding<CGFloat>, start: CGFloat, end: CGFloat){
+        self.textColor = textColor
         self.backgroundColor = backgroundColor
         self._scrollViewOffset = scrollViewOffset
         self.start = start
@@ -24,7 +26,7 @@ struct NavBarOffsetModifier: ViewModifier {
     }
 
     func body(content: Content) -> some View {
-        NavBarOffsetView(backgroundColor: backgroundColor, scrollViewOffset: $scrollViewOffset, start: start, end: end) {
+        NavBarOffsetView(textColor: textColor, backgroundColor: backgroundColor, scrollViewOffset: $scrollViewOffset, start: start, end: end) {
             content
         }
         .ignoresSafeArea()

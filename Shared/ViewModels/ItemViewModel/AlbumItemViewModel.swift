@@ -17,41 +17,81 @@ final class AlbumItemViewModel: ItemViewModel {
     @Published var albumItems : [BaseItemDto] = []
     @Published var selectedSong : BaseItemDto?
     @Published var backgroundColor: Color?
+    @Published var textColor: Color?
+    @Published var secondIsLoading: Bool = false
     
     override init(item:BaseItemDto) {
         super.init(item: item)
-        getSongs()
-        getDomanantColor()
-    }
-   
-    func getDomanantColor(){
-        if let data = try? Data(contentsOf: item.imageURL(.primary, maxWidth: 100)){
-            let image = UIImage(data: data) ?? UIImage()
-            let smallImage = image.resize(desired: CGSize(width: 100, height: 100))
-            let kMeans = KMeansClusterer()
-            let points = smallImage.getColors().map({KMeansClusterer.Point(from: $0)})
-            let clusters = kMeans.cluster(points: points, into: 3).sorted(by: {$0.points.count > $1.points.count})
-            let colors = clusters.map(({$0.center.toUIColor()}))
-            guard let mainColor = colors.first else {
-                return
-            }
-            backgroundColor = Color(uiColor: mainColor)
-        }
+        setup()
     }
     
-    func getSongs(){
+    func setup(){
+
+        secondIsLoading = true
+        
+        Publishers.CombineLatest(self.getSongs(), self.getDominantColor())
+            .map{ [weak self] songs, backgroundColor -> ([BaseItemDto], Color?, Color?) in
+                let textColor = self?.getOppositeToDominantColor(backgroundColor: backgroundColor)
+                return (songs, backgroundColor, textColor)
+            }
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] compleation in
+                self?.handleAPIRequestError(completion: compleation)
+            }, receiveValue: { [weak self] (songs, backgroundColor, textColor) in
+                
+                self?.albumItems = songs
+                self?.backgroundColor = backgroundColor
+                self?.textColor = textColor
+                self?.secondIsLoading = false
+            })
+            .store(in: &self.cancellables)
+    }
+    
+
+    func getDominantColor() -> AnyPublisher<Color?,Error> {
+        
+        return URLSession.shared.dataTaskPublisher(for: URLRequest(url: item.imageURL(.primary, maxWidth: 100)))
+            .tryMap{ data, response -> UIImage? in
+                return UIImage(data: data)
+            }
+            .tryMap { image -> [UIColor] in
+                guard let image = image else { return [] }
+                let smallImage = image.resize(desired: CGSize(width: 100, height: 100))
+                let kMeans = KMeansClusterer()
+                let points = smallImage.getColors().map({KMeansClusterer.Point(from: $0)})
+                let clusters = kMeans.cluster(points: points, into: 3).sorted(by: {$0.points.count > $1.points.count})
+                let colors = clusters.map(({$0.center.toUIColor()}))
+                return colors
+            }
+            .tryMap { colors -> Color? in
+                guard let mainColor = colors.first else {
+                    return nil
+                }
+                return Color(uiColor: mainColor)
+            }
+            .eraseToAnyPublisher()
+           
+    }
+    
+    func getOppositeToDominantColor(backgroundColor: Color?) -> Color?{
+        let textColor = backgroundColor != nil ? UIColor(backgroundColor!).hslColor.shiftHue(by: 0.5).shiftSaturation(by: -0.5).shiftBrightness(by: 0.5).uiColor : nil
+        return textColor != nil ? Color(uiColor: textColor!) : nil
+    }
+    
+    func getSongs() -> AnyPublisher<[BaseItemDto], Error> {
         ItemsAPI.getItems(
             userId: SessionManager.main.currentLogin.user.id,
             parentId: item.id
         )
-        .sink { compleation in
-            self.handleAPIRequestError(completion: compleation)
-        } receiveValue: { response in
+        .map { response -> [BaseItemDto] in
             if let items = response.items {
-                self.albumItems = items.sorted{ $0.title < $1.title }
+                return items.sorted { $0.title < $1.title }
+            } else {
+                return []
             }
         }
-        .store(in: &cancellables)
+        .eraseToAnyPublisher()
+   
     }
 }
 
