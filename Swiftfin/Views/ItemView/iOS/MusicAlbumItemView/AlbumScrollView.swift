@@ -17,7 +17,7 @@ extension ItemView {
         private var itemRouter: ItemCoordinator.Router
         @State
         private var scrollViewOffset: CGFloat = 0
-      
+        @Environment(\.safeAreaInsets) var safeArea
         @Namespace var animation
         @ObservedObject
         var viewModel: AlbumItemViewModel
@@ -43,6 +43,9 @@ extension ItemView {
             return scrollViewOffset / headerHeight * 2
         }
         
+        private var isSource: Bool {
+            scrollViewOffset > UIScreen.main.bounds.height * 0.30
+        }
 
         var body: some View {
             
@@ -72,13 +75,31 @@ extension ItemView {
                 height: headerHeight,
                 multiplier: 1
             ) {
+             
                 HeaderView()
+                
             }
-            .onChange(of: scrollViewOffset) { newValue in
-                print(newValue)
+            .overlay(alignment: .top){
+             
+                if isSource{
+                    Text(viewModel.item.displayName)
+                        .font(.body)
+                        .matchedGeometryEffect(id: "animation",in: animation, properties: .position)
+                        .padding(.top,safeArea.top + 5)
+                        .ignoresSafeArea(.all)
+                        .opacity(0.01)
+                        .transition(.scale(scale: 1))
+                       
+                    
+                }
+              
+                
+             
             }
+            .animation(.default, value: isSource)
         }
        
+    
         @ViewBuilder
         func HeaderView() -> some View{
             ZStack(alignment: .bottomLeading){
@@ -89,22 +110,19 @@ extension ItemView {
                         (viewModel.backgroundColor ?? Color.systemBackground)
                             .opacity(headerOverlayOpacity)
                     )
-                
-                if scrollViewOffset <= UIScreen.main.bounds.height * 0.30 {
+            
+                if !isSource{
                 
                     Text(viewModel.item.displayName)
-                        .font(.largeTitle)
-                        .fontWeight(.heavy)
+                        .font(.system(size: 34, weight: .heavy))
+                        .matchedGeometryEffect(id: "animation", in: animation, properties: .position)
                         .foregroundColor(viewModel.textColor != nil ? viewModel.textColor : .primary)
                         .opacity(headerTextOpacity)
-                        .matchedGeometryEffect(id: "Title", in: animation)
+                        .lineLimit(1)
                         .padding(.leading, 30)
                         .padding(.bottom, 10)
-                        .lineLimit(1)
-                        .onAppear(){
-                            print(UIScreen.main.bounds.height * 0.3)
-                        }
-                    
+                        .transition(.scale(scale: 1))
+          
                 }
            
             }
