@@ -83,12 +83,12 @@ final class LibraryViewModel: PagingLibraryViewModel {
         let includeItemTypes: [BaseItemKind]
 
         if filters.filters.contains(ItemFilter.isFavorite.filter) {
-            includeItemTypes = [.movie, .boxSet, .series, .season, .episode]
+            includeItemTypes = [.movie, .boxSet, .series, .season, .episode, .book, .audioBook]
         } else if type == .folders {
             recursive = false
-            includeItemTypes = [.movie, .boxSet, .series, .folder, .collectionFolder]
+            includeItemTypes = [.movie, .boxSet, .series, .folder, .collectionFolder, .book, .audioBook]
         } else {
-            includeItemTypes = [.movie, .boxSet, .series]
+            includeItemTypes = [.movie, .boxSet, .series, .book, .audioBook]
         }
 
         var excludedIDs: [String]?

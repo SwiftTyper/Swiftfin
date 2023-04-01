@@ -26,7 +26,7 @@ final class MediaViewModel: ViewModel {
             .appending(libraries)
     }
 
-    private static let supportedCollectionTypes: [String] = ["boxsets", "folders", "movies", "tvshows", "unknown"]
+    private static let supportedCollectionTypes: [String] = ["boxsets", "folders", "movies", "tvshows", "unknown", "books", "audiobooks"]
 
     override init() {
         super.init()

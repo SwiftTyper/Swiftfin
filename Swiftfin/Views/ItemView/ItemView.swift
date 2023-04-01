@@ -42,6 +42,12 @@ struct ItemView: View {
                 } else {
                     CollectionItemView(viewModel: .init(item: item))
                 }
+            case .book:
+                if UIDevice.isIPad {
+                    EmptyView()
+                }else {
+                    BookItemView(viewModel: .init(item: item))
+                }
             case .person:
                 LibraryView(viewModel: LibraryViewModel(parent: item, type: .person))
 //                LibraryView(viewModel: .init(parent: item, type: .person))
