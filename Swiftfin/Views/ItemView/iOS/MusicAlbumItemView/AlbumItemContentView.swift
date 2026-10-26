@@ -17,11 +17,84 @@ extension AlbumItemView{
         
         var body: some View {
             
-            VStack(alignment: .leading, spacing: 20){
-                ForEach(viewModel.albumItems){ item in
-                    SongItemView(viewModel: .init(item: item))
-                }.padding(.horizontal, 20)
+            ScrollView(.vertical, showsIndicators: false){
+                
+                VStack(spacing: 20){
+                    
+                    ImageView(viewModel.item.imageSource(.primary, maxWidth: 250))
+                        .frame(width: 250, height: 250)
+                        .cornerRadius(20)
+                        
+                    VStack(alignment: .leading, spacing: 0){
+                            
+                        Text("Album")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
+                            VStack(alignment: .leading, spacing: 10){
+                                
+                                Text(viewModel.item.displayName)
+                                    .font(.title)
+                                    .bold()
+                                    .foregroundColor(.primary)
+                                    .padding(.top, 5)
+                                
+                                Label {
+                                    Text(String(viewModel.albumItems.count) + " songs")
+                                } icon: {
+                                    Image(systemName: "music.note")
+                                }
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+
+                                HStack(spacing: 20){
+                                    
+                                    Image(systemName: "suit.heart")
+                                        .onTapGesture {
+                                            
+                                        }
+                                    
+                                    Image(systemName: "square.and.arrow.down")
+                                        .onTapGesture {
+                                            
+                                        }
+                                    
+                                    Image(systemName: "ellipsis")
+                                        .rotationEffect(.degrees(-90))
+                                        .onTapGesture {
+                                            
+                                        }
+                                }
+                                .foregroundColor(.primary)
+                            }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .overlay(
+                        
+                        Button {
+                            
+                            
+                        } label: {
+                            Circle()
+                                .foregroundColor(.jellyfinPurple)
+                                .overlay(
+                                    Image(systemName: "play.fill")
+                                        .foregroundColor(.white)
+                                        .frame(height: 20)
+                                    ,alignment: .center
+                                )
+                                .frame(width: 60)
+                        }
+                        ,alignment: .bottomTrailing
+                    )
+                    
+                    ForEach(viewModel.albumItems, id: \.self) { item in
+                        SongItemView(song: item)
+                    }
+                    
+                }
             }
+            .padding(.horizontal, 20)
             
         }
     }

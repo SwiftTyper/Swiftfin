@@ -6,99 +6,60 @@
 // Copyright (c) 2023 Jellyfin & Jellyfin Contributors
 //
 
+import Foundation
 import SwiftUI
+import JellyfinAPI
 
-extension AlbumItemView{
+struct SongItemView: View{
+   
+    @EnvironmentObject var viewModel: MusicPlayerViewModel
+    let song: BaseItemDto
     
-    struct SongItemView: View {
-
-        @ObservedObject var viewModel: ItemViewModel
+    var body: some View{
         
-        init(viewModel: ItemViewModel){
-            self.viewModel = viewModel
-        }
-       
-        var body: some View {
+        Button {
+            viewModel.currentSong = song
+        } label: {
             
-            HStack(spacing: 0){
+            HStack(spacing: 20){
                 
-                VStack(alignment: .leading, spacing: 0){
-                        
-                    Text(viewModel.item.title)
-                        .font(.body)
-                        .fontWeight(.medium)
-                        .lineLimit(1)
+                ImageView(song.imageSource(.primary, maxWidth: 50, maxHeight: 50))
+                    .frame(width: 50, height: 50)
+                    .cornerRadius(10)
+                
+                VStack(alignment: .leading, spacing: 5){
                     
-                    Text(viewModel.item.albumArtist ?? "")
-                        .font(.subheadline)
-                        .fontWeight(.medium)
+                    Text(song.displayName)
+                        .bold()
                         .lineLimit(1)
-                        .foregroundColor(.secondary)
+                        .allowsTightening(true)
+                        .foregroundColor(.primary)
+                        .font(.subheadline)
+                       
+                   
+                    HStack(spacing: 5){
+                        ForEach(song.artists ?? [], id: \.self){ artist in
+                            NavigationLink {
+                                ArtistItemView(viewModel: .init(item: song))
+                            } label: {
+                                Text(String(artist))
+                                    .foregroundColor(.gray)
+                                    .font(.caption)
+                            }
+                        }
+                        Spacer()
+                    }
+                    .lineLimit(1)
+                   
                 }
                 
                 Spacer()
                 
-                Menu{
-                    favoriteButton()
-                    checkmarkButton()
-                } label: {
-                    Image(systemName: "ellipsis")
-                        .foregroundColor(.primary)
-                }
-               
+                Image(systemName: "ellipsis")
+                    .rotationEffect(.degrees(-90))
+                    .frame(height: 15)
+                    .foregroundColor(.primary)
             }
-            
-        }
-
-        @ViewBuilder
-        func favoriteButton() -> some View{
-            
-            Button {
-                UIDevice.impact(.light)
-                viewModel.toggleFavoriteState()
-            } label: {
-                
-                Label {
-                    Text("favorite")
-                } icon: {
-                    if viewModel.isFavorited {
-                        Image(systemName: "heart.fill")
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(Color.red)
-                    } else {
-                        Image(systemName: "heart")
-                    }
-                }
-                
-            }
-         
-            
-        }
-        
-        @ViewBuilder
-        func checkmarkButton() -> some View{
-            
-            Button {
-                UIDevice.impact(.light)
-                viewModel.toggleWatchState()
-            } label: {
-                Label {
-                    Text("watched")
-                } icon: {
-                    if viewModel.isWatched {
-                        Image(systemName: "checkmark.circle.fill")
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(
-                                .primary,
-                                Color.jellyfinPurple
-                            )
-                    } else {
-                        Image(systemName: "checkmark.circle")
-                    }
-                }
-            }
-           
         }
     }
 }
-

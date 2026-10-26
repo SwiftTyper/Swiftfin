@@ -10,6 +10,7 @@ import Defaults
 import MessageUI
 import Stinsen
 import SwiftUI
+import JellyfinAPI
 
 // MARK: JellyfinPlayerApp
 
@@ -18,7 +19,9 @@ struct JellyfinPlayerApp: App {
 
     @UIApplicationDelegateAdaptor(AppDelegate.self)
     var appDelegate
-
+    @Namespace var animation
+    @ObservedObject var viewModel: MusicPlayerViewModel = .init()
+    
     var body: some Scene {
         WindowGroup {
             EmptyView()
@@ -27,10 +30,18 @@ struct JellyfinPlayerApp: App {
                     window?.rootViewController = PreferenceUIHostingController {
                         MainCoordinator()
                             .view()
+//                            .sheet(isPresented: self.$viewModel.isExpanded, content: {
+//                                MusicPlayerView()
+//                            })
+//                            .overlay(
+//                                MusicPlayerView()
+//                            )
+                            .environmentObject(viewModel)
                     }
                 }
                 .onAppear {
                     JellyfinPlayerApp.setupAppearance()
+                    viewModel.namespace = animation
                 }
                 .onOpenURL { url in
                     AppURLHandler.shared.processDeepLink(url: url)

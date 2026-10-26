@@ -18,16 +18,14 @@ final class AlbumItemViewModel: ItemViewModel {
     @Published var selectedSong : BaseItemDto?
     @Published var backgroundColor: Color?
     @Published var textColor: Color?
-    @Published var secondIsLoading: Bool = false
     
     override init(item:BaseItemDto) {
         super.init(item: item)
         setup()
     }
+   
     
     func setup(){
-
-        secondIsLoading = true
         
         Publishers.CombineLatest(self.getSongs(), self.getDominantColor())
             .map{ [weak self] songs, backgroundColor -> ([BaseItemDto], Color?, Color?) in
@@ -38,11 +36,9 @@ final class AlbumItemViewModel: ItemViewModel {
             .sink(receiveCompletion: { [weak self] compleation in
                 self?.handleAPIRequestError(completion: compleation)
             }, receiveValue: { [weak self] (songs, backgroundColor, textColor) in
-                
                 self?.albumItems = songs
                 self?.backgroundColor = backgroundColor
                 self?.textColor = textColor
-                self?.secondIsLoading = false
             })
             .store(in: &self.cancellables)
     }

@@ -11,6 +11,8 @@ import Stinsen
 import SwiftUI
 
 final class MainTabCoordinator: TabCoordinatable {
+    
+    
     var child = TabChild(startingItems: [
         \MainTabCoordinator.home,
         \MainTabCoordinator.search,
@@ -81,5 +83,9 @@ final class MainTabCoordinator: TabCoordinatable {
                 AppURLHandler.shared.processLaunchedURLIfNeeded()
             }
         }
+        .overlay (
+            MusicPlayerView()
+            ,alignment: .bottom
+        )
     }
 }

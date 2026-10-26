@@ -31,13 +31,9 @@ struct AlbumItemView: View {
 //            }
 //        }
         
-        if viewModel.secondIsLoading{
-            ProgressView()
-        }else{
-            ItemView.AlbumScrollView(viewModel: viewModel){
-                ContentView(viewModel: viewModel)
-            }
-        }
+      
+            ContentView(viewModel: viewModel)
+        
         
     }
 }
